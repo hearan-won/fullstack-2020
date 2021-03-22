@@ -1,4 +1,6 @@
-const http = require('http')
+// change from http to express (library of node.js)
+const express = require('express')
+const app = express() 
 
 // list of notes in JSON format
 let notes = [
@@ -20,16 +22,17 @@ let notes = [
       date: "2019-05-30T19:20:14.298Z",
       important: true
     }
-  ]
+]
 
-
-// create new server using http module function
-const app = http.createServer((request, response) => {
-  // content type - inform receiver that data is in JSON Format 
-  response.writeHead(200, { 'Content-Type': 'application/json' })
-  // notes array gets transformed into JSON
-  response.end(JSON.stringify(notes))
+// define event handler, used to handle http get request
+app.get('/', (request, response) => {
+    response.send('<h1>Hello World!</h1>')
 })
+  
+app.get('/api/notes', (request, response) => {
+    response.json(notes)
+})
+  
 
 const PORT = 3001
 app.listen(PORT)
