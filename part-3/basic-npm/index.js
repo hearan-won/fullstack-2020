@@ -92,6 +92,26 @@ app.post('/api/notes', (request, response) => {
   response.json(note)
 })
 
+
+// middleware that prints info about every request sent to server 
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method)
+  console.log('Path:  ', request.path)
+  console.log('Body:  ', request.body)
+  console.log('---')
+  // next function yields control to the next middleware
+  next()
+}
+
+app.use(requestLogger)
+
+// another middleware that catches requests made to non-existent routes
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
 const PORT = 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
