@@ -3,6 +3,10 @@ const express = require('express')
 const nodemon = require('nodemon')
 const app = express() 
 
+// allow requests from all origins
+const cors = require('cors')
+app.use(cors())
+
 // list of notes in JSON format
 let notes = [
     {
@@ -112,6 +116,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
-const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
