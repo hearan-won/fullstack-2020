@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 
+const cors = require('cors')
+app.use(cors())
+app.use(express.static('build'))
+
 let persons = [
     {
         id: 1,
@@ -97,6 +101,7 @@ app.post('/api/persons', (request, response) => {
     }
 
 })
+
 
 
 const requestLogger = (request, response, next) => {
